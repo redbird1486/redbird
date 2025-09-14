@@ -1,0 +1,19 @@
+{
+  "name": "storageconnect",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "api",
+    "mobile",
+    "web"
+  ],
+  "scripts": {
+    "start": "concurrently \"docker-compose -f infra/docker-compose.dev.yml up --build\" \"npm:start:web\" \"npm:start:mobile\"",
+    "start:web": "npm run dev --workspace=web",
+    "start:mobile": "npm start --workspace=mobile",
+    "postinstall": "npm install --workspaces"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}

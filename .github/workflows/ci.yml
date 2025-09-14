@@ -1,0 +1,53 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  api:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js 18
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - name: Install dependencies
+        run: npm install --workspace=api
+      - name: Run lint
+        run: echo "Linting api..." # Placeholder
+      - name: Run tests
+        run: npm test --workspace=api
+
+  web:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js 18
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - name: Install dependencies
+        run: npm install --workspace=web
+      - name: Run lint
+        run: npm run lint --workspace=web
+      - name: Run tests
+        run: echo "Testing web..." # Placeholder
+
+  mobile:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js 18
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - name: Install dependencies
+        run: npm install --workspace=mobile
+      - name: Run lint
+        run: echo "Linting mobile..." # Placeholder
+      - name: Run tests
+        run: echo "Testing mobile..." # Placeholder

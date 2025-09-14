@@ -1,0 +1,32 @@
+# Dependencies
+node_modules/
+/mobile/node_modules
+/web/node_modules
+/api/node_modules
+
+# Build artifacts
+dist/
+build/
+coverage/
+.next/
+.expo/
+
+# Local environment files
+.env
+local.env
+.env.local
+/api/.env
+/mobile/.env
+/web/.env
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Other
+.DS_Store
+*.pem
+
+# Infra
+/infra/postgres-data/
