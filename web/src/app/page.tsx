@@ -3,6 +3,7 @@ import Header from './components/Header';
 import SearchUpload from './components/SearchUpload';
 import RoleSelection from './components/RoleSelection';
 import ChatPrompt from './components/ChatPrompt';
+import CreateSpace from './components/CreateSpace';
 
 export default function Home() {
   return (
@@ -13,6 +14,7 @@ export default function Home() {
         <RoleSelection />
         <div className="mt-8">
           <ChatPrompt />
+          <CreateSpace />
         </div>
       </main>
     </div>

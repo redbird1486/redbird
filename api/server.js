@@ -1,5 +1,7 @@
 const express = require('express');
 const vision = require('@google-cloud/vision');
+const OpenAI = require('openai');
+const { v4: uuidv4 } = require('uuid');
 
 const app = express();
 const port = process.env.PORT || 3001;
@@ -7,7 +9,39 @@ const port = process.env.PORT || 3001;
 // Increase the limit for JSON request bodies
 app.use(express.json({ limit: '10mb' }));
 
-const client = new vision.ImageAnnotatorClient();
+const visionClient = new vision.ImageAnnotatorClient();
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY,
+});
+
+app.post('/api/spaces', async (req, res) => {
+  try {
+    const { prompt } = req.body;
+    if (!prompt) {
+      return res.status(400).json({ error: 'prompt is required' });
+    }
+
+    if (process.env.MOCK_DALLE === 'true') {
+      console.log('Returning mock DALL-E image');
+      return res.json({
+        id: uuidv4(),
+        url: 'https://storage.googleapis.com/storageconnect-images/mock-dalle-image.png',
+      });
+    }
+
+    const response = await openai.images.generate({
+      prompt,
+      n: 1,
+      size: '256x256',
+    });
+    const url = response.data[0].url;
+
+    res.json({ id: uuidv4(), url });
+  } catch (error) {
+    console.error('DALL-E API error:', error);
+    res.status(500).json({ error: 'dalle_failed' });
+  }
+});
 
 app.post('/api/tag', async (req, res) => {
   try {
